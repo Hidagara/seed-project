@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {Message} from "./message/message.model";
 
 
 @Component({
@@ -8,12 +9,8 @@ import { Component } from '@angular/core';
 
 
 export class AppComponent {
-    tittle = 'Hello guys this is string interpolation output';
+    message: Message = new Message ('some message' , 'me');
 
-    message = {
-        content: 'My message',
-        author: 'Roman'
-    };
 
 }
 
