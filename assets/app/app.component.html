@@ -1,9 +1,16 @@
 <h1>{{tittle}}</h1>
 
 <div class="container">
+
     <div class="row">
-        <div class="col-md-8 col-md-offset-">
-<app-message [message] = "message" (editClicked)="message.content = $event">  </app-message>
-        </div>
+        <app-message-input></app-message-input>
+
     </div>
+    <hr>
+    <div class="row">
+          <app-message-list></app-message-list>
+
+    </div>
+
+
 </div>
