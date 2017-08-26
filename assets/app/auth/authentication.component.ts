@@ -8,7 +8,17 @@ import {Component} from "@angular/core";
     selector: 'app-authentication',
     template:`
     
-        <h1> Authentication</h1>
+        <header class="row spacing">
+            <nav class="col-md-8 col-md-offset-2">
+                <ul class="nav nav-tabs">
+                    <li><a [routerLink]="['signup']">Signup</a></li>
+                    <li><a [routerLink]="['signin']">Signin</a></li>
+                    <li><a [routerLink]="['logout']">Logout</a></li>
+                </ul>
+            </nav>
+        </header>
+        
+        <router-outlet></router-outlet>
     `
 })
 export class AuthenticationComponent{
