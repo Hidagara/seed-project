@@ -24,6 +24,8 @@ export class MessageInputComponent implements OnInit{
         );
     }
 
+
+
     onClear(form: NgForm){
         this.message = null;
         form.resetForm()
@@ -33,6 +35,10 @@ export class MessageInputComponent implements OnInit{
         if (this.message){
             //Edit Message
             this.message.content = form.value.content;
+            this.messageService.updateMessage(this.message)
+                .subscribe(
+                    result => console.log(result)
+                );
             this.message = null;
     }
         else {
