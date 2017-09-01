@@ -11,6 +11,7 @@ var messageRoutes = require('./routes/messages');
 
 var app = express();
 mongoose.connect('localhost:27017/seed-project');
+// E:\Programs\Databases\Mongo\data\db
 
 
 // view engine setup

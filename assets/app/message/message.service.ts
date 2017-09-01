@@ -5,6 +5,7 @@ import {Headers, Http, Response} from "@angular/http";
 import {Injectable} from "@angular/core";
 import 'rxjs/Rx';
 import {Observable} from "rxjs/Observable";
+import {error} from "util";
 
 
 @Injectable()
@@ -25,7 +26,17 @@ export class MessageService{
     }
 
     getMessages(){
-        return this.messages;
+        return this.http.get('/message')
+            .map((response: Response) => {
+            const messages = response.json().obj;
+            let transformedMessages: Message[] = [];
+            for(let message of messages){
+                transformedMessages.push(new Message(message.content,'Dummy',message.id,null));
+            }
+            this.messages = transformedMessages;
+            return transformedMessages;
+            })
+            .catch((error: Response) => Observable.throw(error.json));
     }
 
     deleteMessage(message: Message){
