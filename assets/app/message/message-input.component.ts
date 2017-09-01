@@ -1,28 +1,50 @@
 
 
 
-import {Component} from "@angular/core";
+import {Component, OnInit} from "@angular/core";
 import {MessageService} from "./message.service";
 import {Message} from "./message.model";
 import {NgForm} from "@angular/forms";
+import {NgFor} from "@angular/common";
 
 @Component ({
     selector: 'app-message-input',
     templateUrl:'./message-input.component.html'
 
 })
-export class MessageInputComponent{
+export class MessageInputComponent implements OnInit{
+
+    message: Message;
 
     constructor(private messageService: MessageService){}
 
-    onSubmit(form: NgForm){
+    ngOnInit(){
+        this.messageService.messageIsEditing.subscribe(
+            (message: Message) => this.message = message
+        );
+    }
 
-        const message = new Message (form.value.content, 'Romchik ponchik');
-        this.messageService.addMessage(message)
-             .subscribe(
-                 data => console.log(data),
-                 error => console.error(error)
-             );
+    onClear(form: NgForm){
+        this.message = null;
+        form.resetForm()
+    }
+
+    onSubmit(form: NgForm){
+        if (this.message){
+            //Edit Message
+            this.message.content = form.value.content;
+            this.message = null;
+    }
+        else {
+            //Add message
+            const message = new Message (form.value.content, 'Romchik ponchik');
+            this.messageService.addMessage(message)
+                .subscribe(
+                    data => console.log(data),
+                    error => console.error(error)
+                );
+        }
+
         form.resetForm();
     }
 }

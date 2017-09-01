@@ -24,14 +24,14 @@ import {MessageService} from "./message.service";
 })
 export class MessageComponent {
        @Input() message = Message;
-       @Output() editClicked = new EventEmitter<string>();
+
 
        constructor(private messageService: MessageService){};
 
        color = 'blue';
 
        onEdit(){
-           this.editClicked.emit('A new message from emitter');
+           this.messageService.editMessage(this.message)
        }
 
        onDelete(){
