@@ -53,12 +53,15 @@ export class MessageService{
         const body = JSON.stringify(message || null );
         const headers = new Headers({'Content-Type': 'application/json'});
         console.log(body);
-        return this.http.patch('http://localhost:3000/message/'+ message.messagId,body,{headers: headers})
+        return this.http.patch('message/'+ message.messagId,body,{headers: headers})
             .map((response: Response)=>  response.json())
-            //.catch((error: Response) => Observable.throw(error.json()));
+            .catch((error: Response) => Observable.throw(error.json()));
     }
 
     deleteMessage(message: Message){
         this.messages.splice(this.messages.indexOf(message),1);
+        return this.http.delete('message/'+ message.messagId)
+            .map((response: Response)=>  response.json())
+            .catch((error: Response) => Observable.throw(error.json()));
     }
 }
