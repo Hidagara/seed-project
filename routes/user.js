@@ -5,6 +5,8 @@ var jwt = require('jsonwebtoken');
 
 var User = require('../models/user');
 
+
+
 router.post('/',function(req,res,next){
     var user = new User({
         firstName:  req.body.firstName,
@@ -14,7 +16,6 @@ router.post('/',function(req,res,next){
     });
 
     user.save(function (err,result) {
-
         if(err){
             return res.status(500).json({
                 title: 'An error',

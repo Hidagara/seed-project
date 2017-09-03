@@ -23,14 +23,10 @@ export class MessageInputComponent implements OnInit{
             (message: Message) => this.message = message
         );
     }
-
-
-
     onClear(form: NgForm){
         this.message = null;
         form.resetForm()
     }
-
     onSubmit(form: NgForm){
         if (this.message){
             //Edit Message
