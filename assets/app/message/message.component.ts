@@ -40,4 +40,7 @@ export class MessageComponent {
                     result => console.log(result)
                 )
        }
+       belongToUser(){
+           return localStorage.getItem('userId') == this.message.userId;
+       }
 }

@@ -8,6 +8,7 @@ var User = require('../models/user');
 
 router.get('/',function(req,res,next) {
     Message.find()
+        .populate('user','firstName')
         .exec(function (err, messages) {
             if (err) {
                 return res.status(500).json({
@@ -69,6 +70,7 @@ router.post('/',function (req,res,next) {
 });
 
 router.patch('/:id',function (req,res,next) {
+    var decoded = jwt.decode(req.query.token);
     Message.findById(req.params.id,function (err,message) {
         if(err){
             return res.status(500).json({
@@ -84,6 +86,13 @@ router.patch('/:id',function (req,res,next) {
                 }
             });
         }
+        if (message.user != decoded.user._id){
+            return res.status(500).json({
+                title: 'Wrong user',
+                error: { message: 'This user doesnt have access to edit this message'}
+            });
+        }
+
         message.content = req.body.content;
         message.save(function(err,result){
             if(err){
@@ -101,6 +110,8 @@ router.patch('/:id',function (req,res,next) {
 })
 
 router.delete('/:id',function(req,res,next){
+    var decoded = jwt.decode(req.query.token);
+
     Message.findById(req.params.id,function(err,message){
         if(err){
             return res.status(500).json({
@@ -114,6 +125,13 @@ router.delete('/:id',function(req,res,next){
                 error: ''
             })
         }
+        if (message.user != decoded.user._id) {
+            return res.status(401).json({
+                title: 'Wrong user',
+                error: {message: 'This user doesnt have access to edit this message'}
+            })
+        }
+
         message.remove(function(err,result){
             if(err){
                 return res.status(500).json({
